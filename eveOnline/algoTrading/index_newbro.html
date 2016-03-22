@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Trade Analysis</title>
+<script type="text/javascript" src="../includes/jquery-latest.min.js"></script>
+<script type="text/javascript" src="../includes/flot/jquery.flot.min.js"></script>
+<script type="text/javascript" src="../includes/flot/jquery.flot.stack.min.js"></script>
+<script type="text/javascript" src="../includes/flot/jquery.flot.time.min.js"></script>
+<script type="text/javascript" src="../includes/flot/jquery.flot.symbol.min.js"></script>
+<link rel="stylesheet" type="text/css" href="analysis.css">
+<script type="text/javascript">
+
+    function plotLineGraph(divid,dataDoLo,dataDoAvg,dataDoHi,dataJiLo,dataJiAvg,dataJiHi,dataAmLo,dataAmAvg,dataAmHi){
+	$.plot(divid,[
+	{
+	    data: dataDoAvg,
+	    lines: { show:true , fillColor:"#fa0000"},
+	    points: {show:true, symbol: "square", fillColor: "#fa0000"},
+            label: "Dodixie Average",
+            yaxis: 1
+	},
+        {
+            data: dataDoLo,
+	    lines: { show:true, fillColor: "#fa0000"},
+        },
+        {
+            data: dataDoHi,
+	    lines: { show:true, fillColor: "#fa0000"},
+        },
+	{
+	    data: dataJiAvg,
+	    lines: { show:true , fillColor:"#00fa00"},
+	    points: {show:true, symbol: "circle", fillColor: "#00fa00"},
+            label: "Jita Average",
+            yaxis: 1
+	},
+        {
+            data: dataJiLo,
+	    lines: { show:true, fillColor: "#00fa00"},
+        },
+        {
+            data: dataJiHi,
+	    lines: { show:true, fillColor: "#00fa00"},
+        },
+	{
+	    data: dataAmAvg,
+	    lines: { show:true , fillColor:"#0000fa"},
+	    points: {show:true, symbol: "diamond", fillColor: "#0000fa"},
+            label: "Amarr Average",
+            yaxis: 1
+	},
+        {
+            data: dataDoLo,
+	    lines: { show:true, fillColor: "#0000fa"},
+        },
+        {
+            data: dataDoHi,
+	    lines: { show:true, fillColor: "#0000fa"},
+        }
+      ],
+      {
+         xaxis: {ticks: 7, mode: "time", timeformat:"%y-%m-%d"},
+         legend: {position: "nw"}
+      });
+    };
+</script>
+</head>
+
+
+<body>
+<h1>Trade Analysis</h1>
+ </body>
+</html>
+
