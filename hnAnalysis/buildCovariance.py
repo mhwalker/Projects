@@ -32,10 +32,10 @@ for bg in bigrams.keys():
 	keymap[bg] = i
 	i += 1
 
-db = MySQLdb.connect(host="localhost",user="root",port=3306,db="hnAnalysis",unix_socket="/var/mysql/mysql.sock")
+db = MySQLdb.connect(host="localhost",user="hnAnalysis",passwd="hnhnhn",db="hnAnalysis")
 cursor = db.cursor()
 
-query = "SELECT text FROM commentMetaData ORDER BY id_md5 limit 100000;"
+query = "SELECT text FROM commentMetaData ORDER BY id_md5 limit 100000,100000;"
 cursor.execute(query)
 results = cursor.fetchall()
 
@@ -114,6 +114,6 @@ outcov = dict()
 outcov["cov"] = covariance
 outcov["mean"] = meancolumn
 #print covmatrix
-ofile = open("pcaCov10k.json","w")
+ofile = open("pcaCov10k_run2.json","w")
 json.dump(outcov,ofile)
 ofile.close()

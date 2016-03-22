@@ -1,17 +1,8 @@
 from numpy import *
 from numpy.linalg import *
-import MySQLdb
-import nltk
-import re
-import HTMLParser
-import cPickle as pickle
 import simplejson as json
 
-goodTags = set(["CC","DT","EX","IN","JJ","JJR","JJS","MD","PDT","RB","RBR","RP","TO","UH","VB","VBD","VBG","VBN","VBP","VBZ","WDT","WP","WRB"])
-
-h = HTMLParser.HTMLParser()
-
-bifile = open("skimbigrams.json","r")
+bifile = open("skimbigrams10k.json","r")
 bigrams = json.load(bifile)
 bifile.close()
 
@@ -24,7 +15,7 @@ for bg in bigrams.keys():
 	i += 1
 
 
-covfile = open("pcaCov.json","r")
+covfile = open("pcaCov10k_run2.json","r")
 incov = json.load(covfile)
 covfile.close()
 
@@ -32,27 +23,30 @@ covariance = incov["cov"]
 meanvec = incov["mean"]
 
 covmatrix = matrix(covariance)
-meanc = matrix(meanvec).transpose()/100000.0
-meanmean = meanc*meanc.transpose()
-covmatrix = covmatrix - meanmean
 
 nVectors = 15
 vectors = []
 for i in range(0,nVectors):
-	nvec = random.random(nBigrams)
+	nvec = random.uniform(-1.0,1.0,nBigrams)
 	ncolumn = matrix(nvec).transpose()
-	ncolumn = ncolumn / norm(ncolumn)
+	ncolumn /= norm(ncolumn)
 	while True:
-		ncolumn = covmatrix*ncolumn
-		ncolumn = ncolumn / norm(ncolumn)
-		ocolumn = ncolumn
+		ocolumn = covmatrix*ncolumn
+		#print norm(ncolumn)
+		ocolumn /= norm(ocolumn)
+		#ocolumn = ncolumn
+		dcolumn = ocolumn
 		for v in vectors:
-			ocolumn = ocolumn - (ocolumn*v.transpose())*v
-		ocolumn = ocolumn / norm(ocolumn)
+			a = float(ocolumn.transpose()*v)
+			dcolumn -= a*v
+		dcolumn /= norm(dcolumn)
+		ocolumn = dcolumn
+		#print ocolumn.shape
 		#print len(ocolumn),len(ncolumn)
 		#print ocolumn.shape,ncolumn.shape
-		#print inner(ocolumn.transpose(),ncolumn.transpose())
-		if abs(1.0 - inner(ocolumn.transpose(),ncolumn.transpose())) < 1e-6:
+		#print abs(1.0 - inner(ocolumn.transpose(),ncolumn.transpose()))
+		#print (inner(ocolumn.transpose(),ncolumn.transpose()))
+		if abs(1.0 - inner(ocolumn.transpose(),ncolumn.transpose())) < 1e-3:
 			vectors.append(ocolumn)
 			print i
 			break
@@ -66,6 +60,6 @@ for i in range(0,nVectors):
 		ov[k] = vectors[i][v].item(0)
 	outvectors[i] = ov
 
-unifile = open("pcaOutput.json","w")
+unifile = open("pcaOutput_run2.json","w")
 json.dump(outvectors,unifile)
 unifile.close()

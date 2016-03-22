@@ -1,10 +1,3 @@
-from numpy import *
-from numpy.linalg import *
-import MySQLdb
-import nltk
-import re
-import HTMLParser
-import cPickle as pickle
 import simplejson as json
 import operator
 
@@ -14,7 +7,8 @@ invec = json.load(covfile)
 covfile.close()
 
 nVectors = 15
-for k,vec in invec.iteritems():
+for k in range(0,nVectors):
+	vec = invec[str(k)]
 	sortedvector = sorted(vec.iteritems(), key = operator.itemgetter(1),reverse=True)
 	line = ""
 	for j in range(0,15):
