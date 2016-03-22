@@ -1,0 +1,62 @@
+body{
+background: #000000;
+font-family: "Trebuchet MS",Verdana,Arial,sans-serif;
+color: white;
+padding: 20px;
+text-align: center;
+}
+h1{
+font-weight: 150;
+font-size: 250%;
+}
+p.total{
+position: relative;
+font-size: 150%;
+text-align:center;
+z-index:4;
+}
+div#container{
+margin: 0 auto;
+width: 100%;
+}
+div#total{
+margin: 0 8%;
+background: #009900;
+width: 35%;
+min-width: 200px;
+}
+div#graph{
+margin: 0 8%;
+background: #DDDDDD;
+width: 75%;
+min-width: 200px;
+color: black;
+}
+table.bsmd{
+background:#009900;
+width: 90%;
+margin: 3% 3%;
+}
+td.bsmd{
+background:#990000;
+color: #990000;
+}
+td.bsmd:hover{
+color: white;
+}
+div.clear {clear: both;}
+div.bsmdgood{
+float: left;
+background: #009900;
+margin: 1% 1%;
+}
+div.bsmdbad{
+float: left;
+background: #990000;
+margin: 1% 1%;
+width: 25%;
+height: 100px;
+}
+span.bsmd{
+visibility:hidden;
+}
